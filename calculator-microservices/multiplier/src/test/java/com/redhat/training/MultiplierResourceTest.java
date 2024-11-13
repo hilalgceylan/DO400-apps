@@ -18,3 +18,12 @@ public void simpleMultiplication() {
  // Then
  assertEquals( 6.0f, result );
 }
+@Test
+public void negativeMultiply() {
+ Mockito.when(solverService.solve("-2")).thenReturn(Float.valueOf("-2"));
+ Mockito.when(solverService.solve("3")).thenReturn(Float.valueOf("3"));
+ // When
+ Float result = multiplierResource.multiply("-2", "3");
+ // Then
+ assertEquals( -6.0f, result );
+}

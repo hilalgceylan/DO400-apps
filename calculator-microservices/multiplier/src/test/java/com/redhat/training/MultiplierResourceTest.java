@@ -27,3 +27,15 @@ public void negativeMultiply() {
  // Then
  assertEquals( -6.0f, result );
 }
+@Test
+public void wrongValue() {
+ WebApplicationException cause = new WebApplicationException("Unknown error",
+ Response.Status.BAD_REQUEST);
+ Mockito.when(solverService.solve("a")).thenThrow( new
+ ResteasyWebApplicationException(cause) );
+ Mockito.when(solverService.solve("3")).thenReturn(Float.valueOf("3"));
+ // When
+ Executable multiplication = () -> multiplierResource.multiply("a", "3");
+ // Then
+ assertThrows( ResteasyWebApplicationException.class, multiplication );
+}
